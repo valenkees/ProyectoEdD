@@ -1,6 +1,7 @@
 package ar.edu.uns.cs.ed.tdas.tdalista;
 
 import ar.edu.uns.cs.ed.tdas.excepciones.*;
+import ar.edu.uns.cs.ed.tdas.tdalista.LDE;
 import ar.edu.uns.cs.ed.tdas.Position;
 
 import static org.junit.Assert.*;
@@ -17,8 +18,7 @@ public class ListTest {
 	 */
 
 	private PositionList<String> getList() {
-		PositionList<String> lista = null;
-		//lista = new ListaDoblementeEnlazada<String>(); //TODO: Descomentar y crear instancia del TDA a testear
+		PositionList<String> lista = new LDE<>();
 		return lista;
 	}
 
