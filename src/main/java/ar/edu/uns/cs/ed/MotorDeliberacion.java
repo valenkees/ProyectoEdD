@@ -1,7 +1,12 @@
 package ar.edu.uns.cs.ed;
 
-import ar.edu.uns.cs.ed.tdas.excepciones.InvalidPositionException;
-import ar.edu.uns.cs.ed.tdas.tdalista.PositionList;
+import ar.edu.uns.cs.ed.tdas.excepciones.*;
+import ar.edu.uns.cs.ed.tdas.tdalista.*;
+import ar.edu.uns.cs.ed.tdas.tdamapeo.*;
+import ar.edu.uns.cs.ed.tdas.Position;
+import ar.edu.uns.cs.ed.tdas.tdaarbol.*;
+import ar.edu.uns.cs.ed.tdas.tdadiccionario.diccionarioConHashAbierto;
+import ar.edu.uns.cs.ed.tdas.tdapila.*;
 
 /**
  * Incluir los import necesarios para las clases utilizadas en el código.
@@ -13,6 +18,11 @@ import ar.edu.uns.cs.ed.tdas.tdalista.PositionList;
  */
 public class MotorDeliberacion {
 
+    private Arbol<Opinion> arbol;
+    private MapeoConHashAbierto<String,PositionList<Opinion>> mapeoUsuario;
+    private MapeoConHashAbierto<String,Position<Opinion>> mapeoPosteos;
+    private Stack<Operaciones> operaciones;
+
     /**
      * Incluir los atributos necesarios para el desarrollo.
      */
@@ -23,7 +33,10 @@ public class MotorDeliberacion {
      * 
      */
     public MotorDeliberacion() {
-    //TODO: Inicializar el árbol de debate y las estructuras correspondientes. 
+        arbol = new Arbol<>();
+        mapeoUsuario = new MapeoConHashAbierto<>();
+        mapeoPosteos = new MapeoConHashAbierto<>();
+        operaciones = new pilaConArreglo<>();
     }
 
     /**
@@ -51,6 +64,7 @@ public class MotorDeliberacion {
     public String deshacerUltimaOperacion() throws EmptyStackException {
         //TODO: Implementar la funcionalidad de deshacer la última operación registrada.
     }
+
 /**
  * Crea un nuevo debate con un argumento raíz.
  * @param idRaiz   : Identificador único del tema raíz.
@@ -66,7 +80,37 @@ public class MotorDeliberacion {
  * Crea un usuario y un tema raíz, y los agrega al árbol y a las estructuras correspondientes.
  */
     public void crearDebate(String idRaiz, String texto, String idUsuario, String nombreUsuario) {
-    //TODO: Implementar la creación del debate con el argumento raíz y el usuario correspondiente.
+        
+        if(idRaiz == null || texto == null || idUsuario == null || nombreUsuario == null) {
+            throw new IllegalArgumentException("Alguno de los parámetros es nulo");
+        }
+
+        if(!arbol.isEmpty()){
+            throw new IllegalStateException("El árbol ya tiene un debate");
+        }
+
+        //creando tema de debate
+
+        Usuario user = new Usuario (idUsuario, nombreUsuario);
+        Opinion raizOp = new Opinion (idRaiz,texto,"ROOT",user);
+        arbol.createRoot(raizOp);
+
+        //1) agregando opinion inicio de debate del usuario a su lista de posteos
+        //2) agreando id con la lista de posteos del usuario al mapeo.
+        // mapeo de usarios --> posteos
+        
+        PositionList<Opinion> posteosUser = new LDE<>();
+        posteosUser.addLast(raizOp);
+        mapeoUsuario.put(idUsuario,posteosUser);
+
+        // agregando la posicion de la opinion en el arbol al mapeo.
+        // mapeo de posteos --> posicion en el árbol
+
+        mapeoPosteos.put(idRaiz,arbol.root());
+        
+        // registrando la operacion en el "historial"
+
+        registrarOperacion(1, "CREAR DEBATE" + idRaiz.trim(), idRaiz);
     }
 
     public void Postear(Usuario usr, String idNuevo, String idPadre, String postura, String texto) {
