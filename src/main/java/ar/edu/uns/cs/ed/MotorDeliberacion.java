@@ -1,3 +1,7 @@
+/*...*/
+
+
+
 package ar.edu.uns.cs.ed;
 
 import ar.edu.uns.cs.ed.tdas.excepciones.*;
@@ -115,6 +119,7 @@ public class MotorDeliberacion {
 
     public void Postear(Usuario usr, String idNuevo, String idPadre, String postura, String texto) {
         //TODO: Implementar la funcionalidad de postear un nuevo argumento en el debate.
+    
     }
     
 
