@@ -1,5 +1,7 @@
 
 //77777777777777777
+/*...*/
+
 
 
 package ar.edu.uns.cs.ed;
@@ -115,6 +117,7 @@ public class MotorDeliberacion {
 
     public void Postear(Usuario usr, String idNuevo, String idPadre, String postura, String texto) {
         //TODO: Implementar la funcionalidad de postear un nuevo argumento en el debate.
+    
     }
     
 
