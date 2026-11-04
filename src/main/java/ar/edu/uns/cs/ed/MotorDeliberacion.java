@@ -1,7 +1,7 @@
 package ar.edu.uns.cs.ed;
 
-import main.java.ar.edu.uns.cs.ed.tdas.excepciones.InvalidPositionException;
-import main.java.ar.edu.uns.cs.ed.tdas.tdalista.PositionList;
+import ar.edu.uns.cs.ed.tdas.excepciones.InvalidPositionException;
+import ar.edu.uns.cs.ed.tdas.tdalista.PositionList;
 
 /**
  * Incluir los import necesarios para las clases utilizadas en el código.
